@@ -1,0 +1,3 @@
+[libraries]
+lombok = { module = "org.projectlombok:lombok", version = "1.18.38" }
+jda = { module = "com.github.freya022:JDA", version = "df208e5" }
