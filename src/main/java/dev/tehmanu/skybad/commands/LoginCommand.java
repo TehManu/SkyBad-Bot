@@ -4,9 +4,11 @@ import dev.tehmanu.skybad.SkyBad;
 import net.dv8tion.jda.api.components.container.Container;
 import net.dv8tion.jda.api.components.textdisplay.TextDisplay;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.utils.MarkdownUtil;
+import net.dv8tion.jda.api.utils.TimeFormat;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -48,5 +50,17 @@ public class LoginCommand extends ListenerAdapter {
         final Container container = Container.of(header, body, footer).withAccentColor(Color.GREEN);
 
         event.replyComponents(container).useComponentsV2().queue();
+        sendLoginMessageToManagement(employee, event.getChannel().asTextChannel());
+    }
+
+    // TODO: This needs to be adjusted to the right channel later on
+    private void sendLoginMessageToManagement(Member employee, TextChannel channel) {
+        final TextDisplay header = TextDisplay.create(MarkdownUtil.bold("Neuer Login gemeldet"));
+        final TextDisplay body = TextDisplay.create("Der Mitarbeiter " + employee.getAsMention() + " hat sich so eben erfolgreich eingeloggt.");
+        final TextDisplay footer = TextDisplay.create(MarkdownUtil.bold("Arbeitszeit-Beginn:")
+            + "\n" + TimeFormat.DATE_TIME_LONG.format(System.currentTimeMillis()));
+        final Container container = Container.of(header, body, footer).withAccentColor(Color.GREEN);
+
+        channel.sendMessageComponents(container).useComponentsV2().queue();
     }
 }
