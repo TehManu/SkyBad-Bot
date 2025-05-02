@@ -1,5 +1,6 @@
 package dev.tehmanu.skybad;
 
+import dev.tehmanu.skybad.commands.LoginCommand;
 import dev.tehmanu.skybad.commands.StopCommand;
 import lombok.Getter;
 import net.dv8tion.jda.api.JDA;
@@ -12,15 +13,25 @@ import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author TehManu
  * @since 02.05.2025
  */
+@Getter
 public class SkyBad {
     @Getter
     private static JDA jda;
 
+    @Getter
+    private static SkyBad instance;
+
+    private final Set<Long> trackedEmployees = new HashSet<>();
+
     public static void main(String[] args) throws InterruptedException {
+        instance = new SkyBad();
         jda = JDABuilder.createDefault(System.getenv("TOKEN"))
             .enableIntents(GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS)
             .setMemberCachePolicy(MemberCachePolicy.ALL)
@@ -38,8 +49,16 @@ public class SkyBad {
                 .setDefaultPermissions(DefaultMemberPermissions.DISABLED)
         );
 
+        // login command
+        commands.addCommands(
+            Commands.slash("login", "Beginnt die Messung der Arbeitszeit.")
+                .setContexts(InteractionContextType.GUILD)
+                .setDefaultPermissions(DefaultMemberPermissions.DISABLED)
+        );
+
         commands.queue();
 
         jda.addEventListener(new StopCommand());
+        jda.addEventListener(new LoginCommand());
     }
 }
