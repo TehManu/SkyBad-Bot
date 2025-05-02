@@ -1,9 +1,6 @@
 package dev.tehmanu.skybad;
 
-import dev.tehmanu.skybad.commands.AdminLogoutCommand;
-import dev.tehmanu.skybad.commands.LoginCommand;
-import dev.tehmanu.skybad.commands.LogoutCommand;
-import dev.tehmanu.skybad.commands.StopCommand;
+import dev.tehmanu.skybad.commands.*;
 import lombok.Getter;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -74,11 +71,20 @@ public class SkyBad {
                 .setDefaultPermissions(DefaultMemberPermissions.DISABLED)
         );
 
+        // workingtime command
+        commands.addCommands(
+            Commands.slash("workingtime", "Zeigt die aktuelle Arbeitszeit des Mitarbeiters an.")
+                .addOption(OptionType.USER, "mitarbeiter", "Mitarbeiter für den die Arbeitszeit abgefragt werden soll.", true)
+                .setContexts(InteractionContextType.GUILD)
+                .setDefaultPermissions(DefaultMemberPermissions.DISABLED)
+        );
+
         commands.queue();
 
         jda.addEventListener(new StopCommand());
         jda.addEventListener(new LoginCommand());
         jda.addEventListener(new LogoutCommand());
         jda.addEventListener(new AdminLogoutCommand());
+        jda.addEventListener(new WorkingTimeCommand());
     }
 }
