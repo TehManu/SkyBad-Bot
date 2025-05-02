@@ -1,3 +1,6 @@
 [libraries]
 lombok = { module = "org.projectlombok:lombok", version = "1.18.38" }
 jda = { module = "com.github.freya022:JDA", version = "df208e5" }
+postgresql = { module = "org.postgresql:postgresql", version = "42.7.5" }
+hikaricp = { module = "com.zaxxer:HikariCP", version = "6.3.0" }
+logback = { module = "ch.qos.logback:logback-classic", version = "1.5.18" }

@@ -15,6 +15,9 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.hikaricp)
+    implementation(libs.postgresql)
+    implementation(libs.logback)
     implementation(libs.jda) {
         exclude(module = "opus-java")
         exclude(module = "tink")
