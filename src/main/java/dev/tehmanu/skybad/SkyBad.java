@@ -1,6 +1,7 @@
 package dev.tehmanu.skybad;
 
 import dev.tehmanu.skybad.commands.LoginCommand;
+import dev.tehmanu.skybad.commands.LogoutCommand;
 import dev.tehmanu.skybad.commands.StopCommand;
 import lombok.Getter;
 import net.dv8tion.jda.api.JDA;
@@ -56,9 +57,17 @@ public class SkyBad {
                 .setDefaultPermissions(DefaultMemberPermissions.DISABLED)
         );
 
+        // logout command
+        commands.addCommands(
+            Commands.slash("logout", "Beendet die Messung der Arbeitszeit.")
+                .setContexts(InteractionContextType.GUILD)
+                .setDefaultPermissions(DefaultMemberPermissions.DISABLED)
+        );
+
         commands.queue();
 
         jda.addEventListener(new StopCommand());
         jda.addEventListener(new LoginCommand());
+        jda.addEventListener(new LogoutCommand());
     }
 }
