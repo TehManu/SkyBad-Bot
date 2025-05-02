@@ -4,6 +4,7 @@ import dev.tehmanu.skybad.SkyBad;
 import net.dv8tion.jda.api.components.container.Container;
 import net.dv8tion.jda.api.components.textdisplay.TextDisplay;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -67,5 +68,14 @@ public class AdminLogoutCommand extends ListenerAdapter {
         final Container container = Container.of(header, body, loginTime, logoutTime, workingTime).withAccentColor(Color.YELLOW);
 
         event.replyComponents(container).useComponentsV2().setEphemeral(true).queue();
+        sendAdminLogoutMessageToManagement(employee, loginTime, logoutTime, workingTime, event.getChannel().asTextChannel());
+    }
+
+    private void sendAdminLogoutMessageToManagement(Member employee, TextDisplay loginTime, TextDisplay logoutTime, TextDisplay workingTime, TextChannel channel) {
+        final TextDisplay header = TextDisplay.create(MarkdownUtil.bold("Neuer Adminlogout gemeldet"));
+        final TextDisplay body = TextDisplay.create("Ein Adminlogout wurde beim Mitarbeiter " + employee.getAsMention() + " durchgeführt.");
+        final Container container = Container.of(header, body, loginTime, logoutTime, workingTime).withAccentColor(Color.YELLOW);
+
+        channel.sendMessageComponents(container).useComponentsV2().queue();
     }
 }
