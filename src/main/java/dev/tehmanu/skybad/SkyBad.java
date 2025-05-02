@@ -1,5 +1,6 @@
 package dev.tehmanu.skybad;
 
+import dev.tehmanu.skybad.commands.AdminLogoutCommand;
 import dev.tehmanu.skybad.commands.LoginCommand;
 import dev.tehmanu.skybad.commands.LogoutCommand;
 import dev.tehmanu.skybad.commands.StopCommand;
@@ -8,6 +9,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.interactions.InteractionContextType;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
@@ -64,10 +66,19 @@ public class SkyBad {
                 .setDefaultPermissions(DefaultMemberPermissions.DISABLED)
         );
 
+        // adminlogout command
+        commands.addCommands(
+            Commands.slash("adminlogout", "Beendet die Messung der Arbeitszeit für einen Mitarbeiter.")
+                .addOption(OptionType.USER, "mitarbeiter", "Der Mitarbeiter für den die Messung beendet werden soll.", true)
+                .setContexts(InteractionContextType.GUILD)
+                .setDefaultPermissions(DefaultMemberPermissions.DISABLED)
+        );
+
         commands.queue();
 
         jda.addEventListener(new StopCommand());
         jda.addEventListener(new LoginCommand());
         jda.addEventListener(new LogoutCommand());
+        jda.addEventListener(new AdminLogoutCommand());
     }
 }
