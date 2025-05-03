@@ -7,5 +7,7 @@ WORKDIR /app
 # Kopiere das fertige ShadowJar ins Image
 COPY build/libs/*.jar app.jar
 
+RUN echo "Folgendes liegt in /app:" && ls -lh /app
+
 # Setze den Container-Startbefehl
 ENTRYPOINT ["java", "-jar", "app.jar"]
