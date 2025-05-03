@@ -1,6 +1,9 @@
 # Runtime-Image mit Java 21
 FROM eclipse-temurin:21-jre
 
+# Installiere bash, falls benötigt
+RUN apt-get update && apt-get install -y bash
+
 # Erstelle Verzeichnis für die App
 WORKDIR /app
 
