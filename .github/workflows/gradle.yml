@@ -9,9 +9,7 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ "test" ]
 
 jobs:
   build:
@@ -37,3 +35,6 @@ jobs:
       run: |
         chmod +x ./gradlew
         ./gradlew build
+        docker login --username tehmanu --password ${{ secrets.GH_PAT }} ghcr.io
+        docker build . --tag ghcr.io/tehmanu/skybad-bot:latest
+        docker push ghcr.io/tehmanu/skybad-bot:latest
