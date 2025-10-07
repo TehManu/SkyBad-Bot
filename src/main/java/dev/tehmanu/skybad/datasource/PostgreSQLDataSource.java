@@ -17,7 +17,7 @@ public class PostgreSQLDataSource {
     private final HikariDataSource dataSource;
 
     public PostgreSQLDataSource() {
-        this.config = new HikariConfig("app/config/database.properties");
+        this.config = new HikariConfig("/config/database.properties");
         this.dataSource = new HikariDataSource(config);
     }
 
