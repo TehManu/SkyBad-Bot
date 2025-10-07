@@ -36,6 +36,6 @@ jobs:
       run: |
         chmod +x ./gradlew
         ./gradlew build
-        echo "$GH_PAT" | docker login ghcr.io --username tehmanu --password ${{ secrets.GH_PAT }} -password-stdin
+        echo "$GH_PAT" | docker login ghcr.io --username tehmanu --password-stdin
         docker build . --tag ghcr.io/tehmanu/skybad-bot:latest
         docker push ghcr.io/tehmanu/skybad-bot:latest
