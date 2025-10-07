@@ -45,3 +45,8 @@ jobs:
         username: "TehManu"
         password: ${{ env.GH_PAT }}
         registry: "ghcr.io"
+
+    - name: Build and push Docker image
+      run: |
+        docker build -t ghcr.io/tehmanu/skybad-bot:latest .
+        docker push ghcr.io/tehmanu/skybad-bot:latest
