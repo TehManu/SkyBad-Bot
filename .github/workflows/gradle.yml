@@ -44,3 +44,4 @@ jobs:
       with:
         username: "TehManu"
         password: ${{ env.GH_PAT }}
+        registry: "ghcr.io"
